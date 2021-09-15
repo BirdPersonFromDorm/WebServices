@@ -20,6 +20,6 @@ public class UserRole {
     @Column(name = "role_description")
     private String roleDescription;
 
-    @OneToOne(mappedBy = "userRoleID", cascade = CascadeType.ALL)
-    private User userID;
+    @OneToOne(mappedBy = "userRole", cascade = CascadeType.ALL)
+    private User user;
 }

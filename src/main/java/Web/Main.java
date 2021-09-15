@@ -21,29 +21,50 @@ public class Main {
 
     public static void main(String[] args) {
 
-
-        User byId = userDAO.getById(13);
         Service byId1 = serviceDAO.getById(1);
-        Service byId2 = serviceDAO.getById(2);
+        Service byId3 = serviceDAO.getById(2);
+
+        User byId = userDAO.getById(2);
+
+//        byId1.getUser().add(byId);
+//        byId3.getUser().add(byId);
 
         byId.getService().add(byId1);
-        byId.getService().add(byId2);
+        byId.getService().add(byId3);
 
-        byId1.getUser().add(byId);
-        byId2.getUser().add(byId);
-
+        System.out.println("up");
         userDAO.update(byId);
 
     }
 
     public static void AddNewUserAdmin(String name, String password){
-        UserRole byId = userRoleDAO.getById(1);
+        UserRole byId = userRoleDAO.getById(2);
 
         User user = new User();
         user.setUserName(name);
         user.setPassword(password);
-        user.setUserRoleID(byId);
+        user.setUserRole(byId);
 
         userDAO.save(user);
+    }
+    public static void AddProfile(String firsName, String lastName, String email,
+                                  String phoneNumber, String postalCode){
+        Profile profile = new Profile();
+        profile.setFirsName(firsName);
+        profile.setLastName(lastName);
+        profile.setEmail(email);
+        profile.setPhoneNumber(phoneNumber);
+        profile.setPostalCode(phoneNumber);
+
+        profileDAO.save(profile);
+    }
+    public static void AddService(String name, boolean active, double price){
+
+        Service service = new Service();
+        service.setServiceName("Netflix");
+        service.setActive(true);
+        service.setServiceMonthPrice(10.5);
+
+        serviceDAO.save(service);
     }
 }

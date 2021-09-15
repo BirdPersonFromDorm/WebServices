@@ -12,7 +12,7 @@ public class UserDAO implements IUser {
     public User save(User user) {
         Session session = initDB.getSession();
         session.beginTransaction();
-        session.merge(user);
+        session.save(user);
         session.getTransaction().commit();
         session.close();
         return user;

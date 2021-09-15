@@ -23,7 +23,7 @@ public class Service {
     private boolean isActive;
     @Column(name = "serviceMonthPrice")
     private double serviceMonthPrice;
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade=CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(name = "user_services",
             joinColumns = { @JoinColumn(name = "service_id")},
             inverseJoinColumns = { @JoinColumn(name = "User_id")})
