@@ -21,9 +21,8 @@ public class Incident {
     private boolean isActive;
     @Column(name = "problemDescription")
     private String problemDescription;
-
-
-//    @ManyToOne
-//    private User user;
+    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

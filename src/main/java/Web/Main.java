@@ -1,10 +1,8 @@
 package Web;
 
 import Web.DAO.impl.*;
-import Web.Entity.Profile;
-import Web.Entity.Service;
-import Web.Entity.User;
-import Web.Entity.UserRole;
+import Web.DTO.UserDTO;
+import Web.Entity.*;
 import Web.Init.Init;
 
 import java.util.List;
@@ -17,23 +15,13 @@ public class Main {
     public static UserDAO userDAO = new UserDAO();
     public static UserRoleDAO userRoleDAO = new UserRoleDAO();
 
+    public static UserDTO userDTO = new UserDTO();
+
     public static final Init initDB = new Init();
 
     public static void main(String[] args) {
 
-        Service byId1 = serviceDAO.getById(1);
-        Service byId3 = serviceDAO.getById(2);
-
-        User byId = userDAO.getById(2);
-
-//        byId1.getUser().add(byId);
-//        byId3.getUser().add(byId);
-
-        byId.getService().add(byId1);
-        byId.getService().add(byId3);
-
-        System.out.println("up");
-        userDAO.update(byId);
+        userDTO.getAllUsers();
 
     }
 

@@ -27,6 +27,6 @@ public class Service {
     @JoinTable(name = "user_services",
             joinColumns = { @JoinColumn(name = "service_id")},
             inverseJoinColumns = { @JoinColumn(name = "User_id")})
-    private List<User> user;
+    private Set<User> user;
 
 }
