@@ -2,20 +2,28 @@ package Web.DTO;
 
 import Web.DAO.impl.UserDAO;
 import Web.Entity.User;
+import Web.Entity.UserRole;
+import lombok.Data;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.List;
 
+@Data
 public class UserDTO {
 
-    UserDAO userDAO = new UserDAO();
 
-    public List<User> getAllUsers() {
-        List<User> liftOfAllPatient = userDAO.getAllPatient();
-        for (User user : liftOfAllPatient) {
-            System.out.println("User: " + user.getUserName() + " Name: "
-                    + user.getProfile().getFirsName() + " " + user.getProfile().getLastName());
-        }
+    private String userName;
+    private String role;
 
-        return liftOfAllPatient;
+    public UserDTO mapToDTO(User user, UserRole userRole){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserName(user.getUserName());
+        userDTO.setRole(userRole.getRoleName());
+
+        return userDTO;
     }
+
 }

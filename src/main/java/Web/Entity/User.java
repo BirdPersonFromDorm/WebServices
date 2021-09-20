@@ -1,5 +1,6 @@
 package Web.Entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Table(name = "user")
 @Getter
 @Setter
+@ToString
 public class User {
 
     @Id

@@ -2,7 +2,12 @@ package Web.DAO.impl;
 
 import Web.DAO.IIncident;
 import Web.Entity.Incident;
+import Web.Entity.User;
+import Web.Init.Init;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 import static Web.Main.initDB;
 
@@ -40,5 +45,20 @@ public class IncidentDAO implements IIncident {
         session.delete(incident);
         session.getTransaction().commit();
         session.close();
+    }
+
+    public List<Incident> getAllIncident() {
+        Session session = Init.getSession();
+        session.beginTransaction();
+        Query<Incident> query = session.createQuery(" FROM Incident");
+        return query.list();
+    }
+
+    public List<Incident> fetchAllActiveIncidents() {
+        Session session = Init.getSession();
+        session.beginTransaction();
+        Query<Incident> query = session.createQuery(" SELECT i FROM Incident i where i.isActive=:a");
+        query.setParameter("a", true);
+        return query.list();
     }
 }

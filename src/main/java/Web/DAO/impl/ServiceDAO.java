@@ -1,8 +1,14 @@
 package Web.DAO.impl;
 
 import Web.DAO.IService;
+import Web.Entity.Incident;
 import Web.Entity.Service;
+import Web.Entity.User;
+import Web.Init.Init;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 import static Web.Main.initDB;
 

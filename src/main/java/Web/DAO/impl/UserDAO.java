@@ -47,10 +47,11 @@ public class UserDAO implements IUser {
         session.getTransaction().commit();
         session.close();
     }
-    public List<User> getAllPatient() {
+    public List<User> getAllUser() {
         Session session = Init.getSession();
         session.beginTransaction();
         Query<User> query = session.createQuery(" FROM User");
         return query.list();
     }
+
 }
