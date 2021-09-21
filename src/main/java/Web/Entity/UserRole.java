@@ -21,5 +21,5 @@ public class UserRole {
     private String roleDescription;
 
     @OneToOne(mappedBy = "userRole", cascade = CascadeType.ALL)
-    private User user;
+    private User users;
 }

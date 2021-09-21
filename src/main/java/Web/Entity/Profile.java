@@ -26,7 +26,7 @@ public class Profile {
     @Column(name = "postalCode")
     private String postalCode;
     @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL)
-    private User userID;
+    private User user;
 
 
 //    @OneToOne

@@ -24,6 +24,6 @@ public class Incident {
     private String problemDescription;
     @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User users;
 
 }

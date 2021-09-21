@@ -1,10 +1,11 @@
 package Web.controller;
 
 import Web.DAO.impl.UserDAO;
-import Web.Entity.User;
+import Web.controller.realization.Admin;
+import Web.controller.realization.SuperAdmin;
+import Web.controller.realization.User;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -24,26 +25,26 @@ public class Run {
             String password = bw.readLine();
 
 
-            List<User> allUser = userDAO.getAllUser();
-            for (User user:allUser) {
+            List<Web.Entity.User> allUser = userDAO.getAllUser();
+            for (Web.Entity.User user:allUser) {
                 if (Objects.equals(login, user.getUserName()) && Objects.equals(password, user.getPassword())){
+                    Web.Entity.User loggedUser = user;
                     System.out.println("Welcome");
                     String userRole = user.getUserRole().getRoleName();
                     switch (userRole){
                         case "ADMIN":
+                            Admin.adminFunctions();
                             break;
                         case "USER":
+                            User.usersFunctions(loggedUser);
                             break;
                         case "SUPER_ADMIN":
-                            SuperAdminFunctions.SuperAdminFunctions();
+                            SuperAdmin.SuperAdminFunctions();
                         break;
                     }
                 }
             }
-
             break;
         }
     }
-
-
 }

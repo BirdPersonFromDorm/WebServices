@@ -1,17 +1,17 @@
-package Web.controller;
+package Web.controller.realization;
 
 import Web.DAO.impl.*;
-import Web.Entity.Incident;
-import Web.Entity.Service;
-import Web.Entity.User;
-import Web.Entity.UserRole;
+import Web.Entity.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-public class SuperAdminFunctions {
+import static Web.controller.FunctionsOfAdmin.*;
+
+public class SuperAdmin {
+
 
     public static IncidentDAO incidentDAO = new IncidentDAO();
     public static ProfileDAO profileDAO = new ProfileDAO();
@@ -19,7 +19,7 @@ public class SuperAdminFunctions {
     public static UserDAO userDAO = new UserDAO();
     public static UserRoleDAO userRoleDAO = new UserRoleDAO();
 
-    public static void continuous() throws IOException {
+    public static void continuation() throws IOException {
         BufferedReader bw = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("\nПродолжить или выйти?\n" +
                 "1. Продолжить \n" +
@@ -48,36 +48,38 @@ public class SuperAdminFunctions {
                     "7. Create Incident \n" +
                     "8. Close Incident \n" +
                     "9. Delete user by id \n" +
+                    "10. Unsubscribe Service \n" +
+                    "11. Update user \n" +
                     "0. Exit");
             String move = bw.readLine();
             switch (move) {
                 case "1":
-                    List<User> allUser = userDAO.getAllUser();
-                    for (User user : allUser) {
+                    List<Web.Entity.User> allUser = userDAO.getAllUser();
+                    for (Web.Entity.User user : allUser) {
                         System.out.println(user.getUserName());
                     }
-                    continuous();
+                    continuation();
                     break;
                 case "2":
                     List<Incident> incidents = incidentDAO.getAllIncident();
                     for (Incident incident : incidents) {
                         System.out.println("Name: " + incident.getServiceName() + " Description: " + incident.getProblemDescription());
                     }
-                    continuous();
+                    continuation();
                     break;
                 case "3":
                     List<Incident> activeIncident = incidentDAO.fetchAllActiveIncidents();
                     for (Incident incident : activeIncident) {
-                        System.out.println("Name: " + incident.getServiceName() + " Description: " + incident.getProblemDescription());
+                        System.out.println("Name: " + incident.getServiceName() + " \nDescription: " + incident.getProblemDescription());
                     }
-                    continuous();
+                    continuation();
                     break;
                 case "4":
                     BufferedReader userbuId = new BufferedReader(new InputStreamReader(System.in));
                     System.out.println("enter id");
                     int userByID = Integer.parseInt(userbuId.readLine());
                     getUserByID(userByID);
-                    continuous();
+                    continuation();
                     break;
                 case "5":
                     BufferedReader forLogin = new BufferedReader(new InputStreamReader(System.in));
@@ -88,7 +90,7 @@ public class SuperAdminFunctions {
                     String passwod = forPasswrod.readLine();
                     AddNewUser(login, passwod);
                     System.out.println("You added new User");
-                    continuous();
+                    continuation();
                     break;
                 case "6":
                     BufferedReader foridUser = new BufferedReader(new InputStreamReader(System.in));
@@ -98,6 +100,7 @@ public class SuperAdminFunctions {
                     System.out.println("Enter id User");
                     int idService = Integer.parseInt(foridService.readLine());
                     subscribeService(idUser, idService);
+                    continuation();
                     break;
                 case "7":
                     BufferedReader forUserID = new BufferedReader(new InputStreamReader(System.in));
@@ -109,77 +112,96 @@ public class SuperAdminFunctions {
                     String name = forname.readLine();
                     System.out.println("Enter description");
                     String description = fordescription.readLine();
-
                     createIncident(userID, name, description);
+                    continuation();
                     break;
                 case "8":
                     BufferedReader forincidentID = new BufferedReader(new InputStreamReader(System.in));
                     System.out.println("Enter id User");
                     int incidentID = Integer.parseInt(forincidentID.readLine());
                     closeIncident(incidentID);
+                    continuation();
                     break;
                 case "9":
                     BufferedReader foruserID = new BufferedReader(new InputStreamReader(System.in));
                     System.out.println("Enter id User");
                     int userIDToDelete = Integer.parseInt(foruserID.readLine());
                     deleteUserByID(userIDToDelete);
+                    continuation();
+                    break;
+                case "10":
+                    BufferedReader serviceId = new BufferedReader(new InputStreamReader(System.in));
+                    BufferedReader userId = new BufferedReader(new InputStreamReader(System.in));
+                    System.out.println("Enter User Id");
+                    int userIDForSrvice = Integer.parseInt(serviceId.readLine());
+                    System.out.println("Enter service ID");
+                    int serviceIDForUser = Integer.parseInt(serviceId.readLine());
+                    unsubscribeService(userIDForSrvice, serviceIDForUser);
+                    continuation();
+                    break;
+                case "11":
+                    System.out.println("what do you want to update?\n" +
+                            "login\n" +
+                            "password\n" +
+                            "name\n" +
+                            "lastname\n" +
+                            "back\n");
+                    BufferedReader lineForUpdate = new BufferedReader(new InputStreamReader(System.in));
+                    String updateLine = lineForUpdate.readLine();
+                    switch (updateLine) {
+                        case "login":
+                            System.out.println("Enter user id");
+                            BufferedReader IdOfUserForUpdateLogin = new BufferedReader(new InputStreamReader(System.in));
+                            int useridForUpdate = Integer.parseInt(IdOfUserForUpdateLogin.readLine());
+
+                            System.out.println("Enter new Login");
+                            BufferedReader newLoginOfUser = new BufferedReader(new InputStreamReader(System.in));
+                            String newLogin = newLoginOfUser.readLine();
+
+                            updateLogin(useridForUpdate, newLogin);
+                            break;
+                        case "password":
+                            System.out.println("Enter user id");
+                            BufferedReader IdOfUserForUpdatePassword = new BufferedReader(new InputStreamReader(System.in));
+                            int useridForUpdatePassword = Integer.parseInt(IdOfUserForUpdatePassword.readLine());
+
+                            System.out.println("Enter new password");
+                            BufferedReader newPasswrodOfUser = new BufferedReader(new InputStreamReader(System.in));
+                            String newPassword = newPasswrodOfUser.readLine();
+
+                            updatePassword(useridForUpdatePassword, newPassword);
+                            break;
+                        case "name":
+                            System.out.println("Enter user Id");
+                            BufferedReader IdOfUserForUpdateName = new BufferedReader(new InputStreamReader(System.in));
+                            int useridForUpdateName = Integer.parseInt(IdOfUserForUpdateName.readLine());
+
+                            System.out.println("Enter new Name");
+                            BufferedReader newNameOfUser = new BufferedReader(new InputStreamReader(System.in));
+                            String newName = newNameOfUser.readLine();
+
+                            updateName(useridForUpdateName, newName);
+                            break;
+                        case "lastname":
+                            System.out.println("Enter new Id");
+                            BufferedReader IdOfUserForUpdateLastName = new BufferedReader(new InputStreamReader(System.in));
+                            int useridForUpdateLastName = Integer.parseInt(IdOfUserForUpdateLastName.readLine());
+
+                            System.out.println("Enter new Lastname");
+                            BufferedReader newLastnameOfUser = new BufferedReader(new InputStreamReader(System.in));
+                            String newLastname = newLastnameOfUser.readLine();
+
+                            updateLastname(useridForUpdateLastName, newLastname);
+                            break;
+                        case "back":
+                            break;
+                    }
+                    continuation();
                     break;
                 case "0":
                     break;
-
             }
             break;
         }
-
-    }
-
-    public static void getUserByID(int id) {
-        User userByID = userDAO.getById(id);
-        System.out.println(userByID.getUserName());
-    }
-
-    public static void AddNewUser(String name, String password) {
-        UserRole byId = userRoleDAO.getById(1);
-
-        User user = new User();
-        user.setUserName(name);
-        user.setPassword(password);
-        user.setUserRole(byId);
-
-        userDAO.save(user);
-    }
-
-    public static void subscribeService(int idUser, int idService) {
-        User userByID = userDAO.getById(idUser);
-        Service serviceByID = serviceDAO.getById(idService);
-
-        userByID.getService().add(serviceByID);
-        serviceByID.getUser().add(userByID);
-
-        serviceDAO.update(serviceByID);
-    }
-
-    public static void createIncident(int userID, String name, String description) {
-        User userByID = userDAO.getById(userID);
-
-        Incident incident = new Incident();
-        incident.setServiceName("Some Name of Incident");
-        incident.setActive(true);
-        incident.setProblemDescription("Some problem with something");
-        incident.setUser(userByID);
-
-        incidentDAO.save(incident);
-    }
-
-    public static void closeIncident(int IncidentID) {
-        Incident incidentByID = incidentDAO.getById(IncidentID);
-
-        incidentByID.setActive(false);
-
-        incidentDAO.update(incidentByID);
-    }
-    public static void deleteUserByID(int userID) {
-        User UserByID = userDAO.getById(userID);
-        userDAO.delete(UserByID);
     }
 }

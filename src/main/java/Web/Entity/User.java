@@ -8,6 +8,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -32,11 +33,10 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "profile_id")
     private Profile profile;
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users")
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    private Set<Service> service;
-    @OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Incident> incident;
-
+    private Set<Service> services;
+    @OneToMany(mappedBy = "users", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Incident> incidents;
 
 }

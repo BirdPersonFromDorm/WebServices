@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -28,6 +29,7 @@ public class Service {
     @JoinTable(name = "user_services",
             joinColumns = { @JoinColumn(name = "service_id")},
             inverseJoinColumns = { @JoinColumn(name = "User_id")})
-    private Set<User> user;
+    private Set<User> users;
+
 
 }
