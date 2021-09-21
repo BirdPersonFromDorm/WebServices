@@ -1,17 +1,21 @@
 package Web.Entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "user")
 @Getter
 @Setter
+@ToString
 public class User {
 
     @Id
@@ -29,14 +33,10 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "profile_id")
     private Profile profile;
-
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users")
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    private List<Service> service;
-
-
-//    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-//    private Set<Incident> incident;
-
+    private Set<Service> services;
+    @OneToMany(mappedBy = "users", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Incident> incidents;
 
 }
